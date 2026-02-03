@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Be My Valentine? 💖</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&family=Dancing+Script:wght@600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --primary: #ff4d6d;
+            --secondary: #ff8fa3;
+            --bg: #fff0f3; 
+            --glass: rgba(255, 255, 255, 0.9);
+            --shadow: 0 10px 25px rgba(255, 77, 109, 0.15);
+            --text: #590d22;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(180deg, #fff0f3 0%, #ffe3e8 100%);
+            color: var(--text);
+            margin: 0;
+            padding: 0;
+            overflow-x: hidden;
+            min-height: 100vh;
+        }
+
+        /* --- BACKGROUND HEARTS --- */
+        .bg-hearts { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 0; }
+        .heart-bg { position: absolute; bottom: -50px; font-size: 24px; animation: floatUp linear infinite; opacity: 0.6; }
+        @keyframes floatUp {
+            0% { transform: translateY(0) rotate(0deg); opacity: 0; }
+            10% { opacity: 1; }
+            100% { transform: translateY(-110vh) rotate(360deg); opacity: 0; }
+        }
+
+        /* --- HERO SECTION --- */
+        .hero {
+            height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center;
+            position: relative; z-index: 10; text-align: center;
+        }
+        .hero-card {
+            background: var(--glass); backdrop-filter: blur(10px); padding: 40px; border-radius: 30px;
+            box-shadow: var(--shadow); border: 2px solid white; max-width: 90%; width: 350px;
+            animation: bounceIn 1s;
+        }
+        .hero img { width: 160px; border-radius: 20px; margin-bottom: 20px; }
+        h1 { color: var(--primary); font-size: 2rem; margin: 0 0 10px 0; }
+        .btn-group { display: flex; gap: 15px; justify-content: center; margin-top: 20px; }
+        .btn {
+            padding: 12px 35px; border-radius: 50px; border: none; font-size: 1.1rem; font-weight: 600; cursor: pointer;
+            transition: transform 0.2s; font-family: 'Poppins', sans-serif;
+        }
+        .btn-yes { background: var(--primary); color: white; box-shadow: 0 5px 15px rgba(255, 77, 109, 0.4); }
+        .btn-yes:hover { transform: scale(1.05); }
+        .btn-no { background: white; color: var(--primary); border: 2px solid var(--primary); }
+
+        /* --- MAIN CONTENT --- */
+        .container {
+            max-width: 600px; margin: 0 auto; padding: 20px; padding-bottom: 100px;
+            display: none; position: relative; z-index: 10;
+        }
+        .section-box {
+            background: white; border-radius: 25px; padding: 25px; margin-bottom: 30px;
+            box-shadow: var(--shadow); opacity: 0; transform: translateY(20px);
+            animation: fadeInUp 0.6s forwards;
+        }
+        h2 { color: var(--primary); font-size: 1.6rem; text-align: center; margin-bottom: 20px; }
+
+        /* Date Ideas */
+        .date-item {
+            display: flex; align-items: center; gap: 15px; background: #fff5f7; padding: 15px; border-radius: 15px;
+            margin-bottom: 12px; transition: transform 0.2s;
+        }
+        .date-item:hover { transform: scale(1.02); }
+        .date-icon { font-size: 1.5rem; background: white; padding: 10px; border-radius: 50%; }
+
+        /* Soundtrack */
+        .song-item {
+            display: flex; align-items: center; gap: 15px; background: linear-gradient(to right, #2c3e50, #000); color: white;
+            padding: 12px; border-radius: 12px; margin-bottom: 10px;
+        }
+        .album-art { width: 50px; height: 50px; background: #333; border-radius: 8px; background-size: cover; }
+        .music-bars { margin-left: auto; display: flex; gap: 3px; height: 20px; align-items: flex-end; }
+        .bar { width: 4px; background: #1db954; animation: equalize 1s infinite; }
+        .bar:nth-child(2) { animation-delay: 0.2s; }
+        .bar:nth-child(3) { animation-delay: 0.4s; }
+
+        /* Things I Love */
+        .love-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+        .love-card { background: #ffecf1; padding: 20px; border-radius: 15px; text-align: center; color: #d6336c; font-weight: 500; }
+
+        /* --- THE SECRET NOTE (UPDATED) --- */
+        .envelope-container { height: 250px; display: flex; justify-content: center; align-items: center; margin-top: 20px; }
+        .envelope-wrapper { position: relative; width: 300px; height: 200px; cursor: pointer; }
+        .envelope { position: relative; width: 100%; height: 100%; }
+        .envelope::before { /* Envelope Inside */
+            content: ''; position: absolute; bottom: 0; width: 100%; height: 100%;
+            background: #ff8fa3; border-radius: 0 0 10px 10px; z-index: 1;
+        }
+        .flap {
+            position: absolute; top: 0; width: 100%; height: 0;
+            border-left: 150px solid transparent; border-right: 150px solid transparent;
+            border-top: 110px solid #ff4d6d; transform-origin: top;
+            transition: transform 0.6s ease; z-index: 5;
+        }
+        .pocket {
+            position: absolute; bottom: 0; width: 100%; height: 0;
+            border-left: 150px solid transparent; border-right: 150px solid transparent;
+            border-bottom: 110px solid #ff5c7c; z-index: 4; border-radius: 0 0 10px 10px;
+        }
+        
+        .letter {
+            position: absolute; bottom: 10px; left: 5%; width: 90%; height: 90%;
+            background: white; border-radius: 5px; z-index: 2;
+            padding: 20px; box-sizing: border-box; text-align: center;
+            transition: transform 0.8s ease 0.2s; /* Slides up */
+            box-shadow: 0 -5px 15px rgba(0,0,0,0.1);
+            display: flex; align-items: center; justify-content: center;
+        }
+        
+        /* --- THIS IS THE MAGIC TEXT FADE EFFECT --- */
+        .handwritten {
+            font-family: 'Dancing Script', cursive; 
+            font-size: 1.6rem; 
+            color: #444; 
+            line-height: 1.4;
+            opacity: 0; /* INVISIBLE INITIALLY */
+            transform: scale(0.95);
+            /* The delay (0.8s) waits for the letter to slide up before showing text */
+            transition: all 1s ease 0.8s; 
+        }
+        
+        /* When Open */
+        .envelope-wrapper.open .flap { transform: rotateX(180deg); z-index: 1; }
+        .envelope-wrapper.open .letter { transform: translateY(-120px); z-index: 6; }
+        
+        /* Reveal Text When Open */
+        .envelope-wrapper.open .handwritten {
+            opacity: 1;
+            transform: scale(1);
+        }
+
+        /* Memories */
+        .photo-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; }
+        .photo-card { aspect-ratio: 1; background: #fff; border-radius: 15px; overflow: hidden; position: relative; cursor: pointer; }
+        .photo-cover { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: #ffccd5; display: flex; align-items: center; justify-content: center; font-size: 2rem; transition: opacity 0.5s; z-index: 2; }
+        .photo-card img { width: 100%; height: 100%; object-fit: cover; }
+        .photo-card.revealed .photo-cover { opacity: 0; pointer-events: none; }
+
+        @keyframes bounceIn { 0% { transform: scale(0.8); opacity: 0; } 100% { transform: scale(1); opacity: 1; } }
+        @keyframes fadeInUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes equalize { 0% { height: 5px; } 50% { height: 15px; } 100% { height: 5px; } }
+    </style>
+</head>
+<body>
+
+    <div class="bg-hearts">
+        <div class="heart-bg" style="left: 10%; animation-duration: 15s;">❤️</div>
+        <div class="heart-bg" style="left: 30%; animation-duration: 10s;">💖</div>
+        <div class="heart-bg" style="left: 60%; animation-duration: 12s;">💞</div>
+        <div class="heart-bg" style="left: 80%; animation-duration: 18s;">💘</div>
+    </div>
+
+    <div class="hero" id="hero">
+        <div class="hero-card">
+            <img src="https://media.tenor.com/K2sE9tF3oK8AAAAi/milk-and-mocha-cute.gif" alt="Cute Bear">
+            <h1>Will you be my Valentine? 🌹</h1>
+            <p>Official invite from your admirer</p>
+            <div class="btn-group">
+                <button class="btn btn-yes" onclick="showContent()">YES! 🥰</button>
+                <button class="btn btn-no" id="noBtn" onmouseover="moveNo()" ontouchstart="moveNo()">No 💔</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="container" id="content">
+        
+        <div style="text-align: center; margin: 30px 0;">
+            <img src="https://media.tenor.com/gUiu1zyxfzYAAAAi/bear-kiss-bear-kisses.gif" style="width: 150px; border-radius: 15px;">
+            <h2 style="margin-top: 15px;">Good choice Babu! 😘</h2>
+            <p style="color: #666;">You're officially stuck with me now.</p>
+        </div>
+
+        <div class="section-box" style="animation-delay: 0.2s;">
+            <h2>Our Virtual Date Ideas 📅</h2>
+            <div class="date-item"><div class="date-icon">🍿</div><div><strong>Netflix Party</strong><br><small>We watch, we judge.</small></div></div>
+            <div class="date-item"><div class="date-icon">🍜</div><div><strong>Dinner Date</strong><br><small>Order same food & video call.</small></div></div>
+            <div class="date-item"><div class="date-icon">🎮</div><div><strong>Game Night</strong><br><small>I'll let you win (maybe).</small></div></div>
+            <div class="date-item"><div class="date-icon">😴</div><div><strong>Sleep Call</strong><br><small>Napping together on cam.</small></div></div>
+        </div>
+
+        <div class="section-box" style="animation-delay: 0.4s;">
+            <h2>Our Soundtrack 🎵</h2>
+            <div class="song-item">
+                <div class="album-art" style="background-image: url('https://i.scdn.co/image/ab67616d0000b273ba5db46f4b838ef6027e6f96');"></div>
+                <div class="song-info"><h4>Perfect</h4><p>Ed Sheeran</p></div>
+                <div class="music-bars"><div class="bar"></div><div class="bar"></div><div class="bar"></div></div>
+            </div>
+            <div class="song-item">
+                <div class="album-art" style="background-image: url('https://i.scdn.co/image/ab67616d0000b273e787cffec20aa2a396a61647');"></div>
+                <div class="song-info"><h4>Lover</h4><p>Taylor Swift</p></div>
+                <div class="music-bars"><div class="bar"></div><div class="bar"></div><div class="bar"></div></div>
+            </div>
+        </div>
+
+        <div class="section-box" style="animation-delay: 0.6s;">
+            <h2>Things I Love About You ✨</h2>
+            <div class="love-grid">
+                <div class="love-card">Your pretty smile 😊</div>
+                <div class="love-card">Your chaotic energy 🤪</div>
+                <div class="love-card">How you tolerate me 🥺</div>
+                <div class="love-card">Your voice ❤️</div>
+                <div class="love-card">Your hugs (virtual for now) 🫂</div>
+                <div class="love-card">Everything! 💯</div>
+            </div>
+        </div>
+
+        <div class="section-box" style="animation-delay: 0.8s;">
+            <h2>Our Favorite Memories 📸</h2>
+            <div class="photo-grid">
+                <div class="photo-card" onclick="this.classList.add('revealed')"><div class="photo-cover">🎁</div><img src="https://placekitten.com/400/400" alt="Memory"></div>
+                <div class="photo-card" onclick="this.classList.add('revealed')"><div class="photo-cover">🎁</div><img src="https://placekitten.com/401/401" alt="Memory"></div>
+                <div class="photo-card" onclick="this.classList.add('revealed')"><div class="photo-cover">🎁</div><img src="https://placekitten.com/402/402" alt="Memory"></div>
+                <div class="photo-card" onclick="this.classList.add('revealed')"><div class="photo-cover">🎁</div><img src="https://placekitten.com/403/403" alt="Memory"></div>
+            </div>
+        </div>
+
+        <div class="section-box" style="animation-delay: 1s;">
+            <h2>A Secret Note For You 💌</h2>
+            <p style="text-align: center; font-size: 0.9rem;">Tap the envelope to reveal the secret...</p>
+            
+            <div class="envelope-container">
+                <div class="envelope-wrapper" onclick="toggleEnvelope(this)">
+                    <div class="envelope">
+                        <div class="flap"></div>
+                        <div class="pocket"></div>
+                        <div class="letter">
+                            <div class="handwritten">
+                                "My Dearest,<br>
+                                Every day with you is my favorite day. I can't wait to close the distance. Happy Valentine's Day! <br>
+                                - Love, Me"
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <p style="text-align: center; color: #aaa; font-size: 0.8rem; margin-top: 30px;">Made with ❤️ for you</p>
+    </div>
+
+    <script>
+        function showContent() {
+            document.getElementById('hero').style.display = 'none';
+            document.getElementById('content').style.display = 'block';
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function moveNo() {
+            const btn = document.getElementById('noBtn');
+            const x = Math.random() * (window.innerWidth - 100);
+            const y = Math.random() * (window.innerHeight - 50);
+            btn.style.position = 'fixed';
+            btn.style.left = x + 'px';
+            btn.style.top = y + 'px';
+        }
+
+        function toggleEnvelope(element) {
+            element.classList.toggle('open');
+        }
+    </script>
+</body>
+</html>
