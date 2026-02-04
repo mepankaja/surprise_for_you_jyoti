@@ -3,23 +3,24 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Be My Valentine? 💖</title>
+    <title>For My Jyoti 💖</title>
     
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&family=Dancing+Script:wght@600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&family=Dancing+Script:wght@700&family=Sacramento&display=swap" rel="stylesheet">
     
     <style>
         :root {
-            --primary: #ff4d6d;
+            --primary: #ff3366;
             --secondary: #ff8fa3;
-            --bg: #fff0f3; 
+            --bg-color: #ffe6ea;
             --glass: rgba(255, 255, 255, 0.9);
-            --shadow: 0 10px 25px rgba(255, 77, 109, 0.15);
             --text: #590d22;
         }
 
         body {
             font-family: 'Poppins', sans-serif;
-            background: linear-gradient(180deg, #fff0f3 0%, #ffe3e8 100%);
+            background: linear-gradient(-45deg, #ffe6ea, #fff0f3, #ffccd5, #ffe6ea);
+            background-size: 400% 400%;
+            animation: gradientBG 15s ease infinite;
             color: var(--text);
             margin: 0;
             padding: 0;
@@ -27,150 +28,225 @@
             min-height: 100vh;
         }
 
-        /* --- BACKGROUND HEARTS --- */
-        .bg-hearts { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 0; }
-        .heart-bg { position: absolute; bottom: -50px; font-size: 24px; animation: floatUp linear infinite; opacity: 0.6; }
-        @keyframes floatUp {
-            0% { transform: translateY(0) rotate(0deg); opacity: 0; }
-            10% { opacity: 1; }
-            100% { transform: translateY(-110vh) rotate(360deg); opacity: 0; }
+        @keyframes gradientBG {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
         }
 
         /* --- HERO SECTION --- */
         .hero {
-            height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center;
-            position: relative; z-index: 10; text-align: center;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            position: relative;
+            z-index: 10;
         }
+
         .hero-card {
-            background: var(--glass); backdrop-filter: blur(10px); padding: 40px; border-radius: 30px;
-            box-shadow: var(--shadow); border: 2px solid white; max-width: 90%; width: 350px;
+            background: rgba(255, 255, 255, 0.6);
+            backdrop-filter: blur(10px);
+            padding: 40px 30px;
+            border-radius: 40px;
+            border: 2px solid white;
+            width: 350px;
             animation: bounceIn 1s;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
         }
-        .hero img { width: 160px; border-radius: 20px; margin-bottom: 20px; }
-        h1 { color: var(--primary); font-size: 2rem; margin: 0 0 10px 0; }
-        .btn-group { display: flex; gap: 15px; justify-content: center; margin-top: 20px; }
+
+        .name-highlight {
+            font-family: 'Sacramento', cursive;
+            font-size: 3.5rem;
+            color: var(--primary);
+            display: block;
+            margin-bottom: 5px;
+            text-shadow: 2px 2px 0px rgba(255, 255, 255, 0.5);
+        }
+
+        .big-heart { font-size: 5rem; animation: heartbeat 1.5s infinite; display: block; margin-bottom: 10px; }
+        
         .btn {
-            padding: 12px 35px; border-radius: 50px; border: none; font-size: 1.1rem; font-weight: 600; cursor: pointer;
-            transition: transform 0.2s; font-family: 'Poppins', sans-serif;
+            padding: 12px 30px; border-radius: 50px; border: none; font-size: 1.1rem; font-weight: 600; cursor: pointer;
+            transition: all 0.3s; margin: 10px;
         }
-        .btn-yes { background: var(--primary); color: white; box-shadow: 0 5px 15px rgba(255, 77, 109, 0.4); }
+        .btn-yes { background: var(--primary); color: white; box-shadow: 0 5px 15px rgba(255, 51, 102, 0.4); }
         .btn-yes:hover { transform: scale(1.05); }
-        .btn-no { background: white; color: var(--primary); border: 2px solid var(--primary); }
+        .btn-no { background: white; color: var(--text); border: 1px solid #ffccd5; }
 
         /* --- MAIN CONTENT --- */
         .container {
             max-width: 600px; margin: 0 auto; padding: 20px; padding-bottom: 100px;
-            display: none; position: relative; z-index: 10;
+            display: none;
         }
+
+        .header-msg { text-align: center; margin: 30px 0; opacity: 0; animation: fadeIn 1s forwards; }
+        .header-msg h2 { font-family: 'Dancing Script', cursive; font-size: 2.8rem; color: var(--primary); margin: 0; }
+
+        /* Scroll Animation Class */
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s ease-out;
+        }
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
         .section-box {
-            background: white; border-radius: 25px; padding: 25px; margin-bottom: 30px;
-            box-shadow: var(--shadow); opacity: 0; transform: translateY(20px);
-            animation: fadeInUp 0.6s forwards;
+            background: var(--glass);
+            border-radius: 25px; padding: 25px; margin-bottom: 25px;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.05);
         }
-        h2 { color: var(--primary); font-size: 1.6rem; text-align: center; margin-bottom: 20px; }
 
-        /* Date Ideas */
-        .date-item {
-            display: flex; align-items: center; gap: 15px; background: #fff5f7; padding: 15px; border-radius: 15px;
-            margin-bottom: 12px; transition: transform 0.2s;
+        h3 { color: var(--primary); font-size: 1.4rem; text-align: center; margin-bottom: 25px; }
+
+        /* --- ZIG-ZAG MEMORIES --- */
+        .memory-lane {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            padding: 20px 10px;
+            position: relative;
         }
-        .date-item:hover { transform: scale(1.02); }
-        .date-icon { font-size: 1.5rem; background: white; padding: 10px; border-radius: 50%; }
 
-        /* Soundtrack */
+        .wire {
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 100px;
+            border-top: 2px dashed #ffb3c1;
+            border-radius: 50%;
+            z-index: 0;
+            opacity: 0.6;
+        }
+
+        .photo-frame {
+            width: 45%;
+            background: white;
+            padding: 5px 5px 20px 5px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.15);
+            margin-bottom: 30px;
+            position: relative;
+            transform-origin: top center;
+            z-index: 1;
+            transition: transform 0.3s;
+        }
+        .photo-frame:hover { transform: scale(1.05) rotate(0deg) !important; z-index: 10; }
+
+        .photo-frame img { width: 100%; aspect-ratio: 1; object-fit: cover; filter: sepia(10%); }
+
+        .photo-frame:nth-child(even) { margin-top: 40px; transform: rotate(3deg); }
+        .photo-frame:nth-child(odd) { margin-top: 0px; transform: rotate(-3deg); }
+
+        .photo-frame::before { content: ''; position: absolute; top: -15px; left: 50%; width: 2px; height: 15px; background: #999; }
+        .photo-frame::after { content: ''; position: absolute; top: -20px; left: 45%; width: 10px; height: 10px; background: #ff3366; border-radius: 50%; box-shadow: 0 0 10px #ff3366; }
+
+        /* --- SONGS (FIXED THUMBNAILS) --- */
         .song-item {
-            display: flex; align-items: center; gap: 15px; background: linear-gradient(to right, #2c3e50, #000); color: white;
-            padding: 12px; border-radius: 12px; margin-bottom: 10px;
+            display: flex; align-items: center; gap: 15px;
+            background: white; padding: 10px; border-radius: 15px; margin-bottom: 10px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.02);
+            transition: transform 0.2s;
+            position: relative;
+            overflow: hidden;
         }
-        .album-art { width: 50px; height: 50px; background: #333; border-radius: 8px; background-size: cover; }
-        .music-bars { margin-left: auto; display: flex; gap: 3px; height: 20px; align-items: flex-end; }
-        .bar { width: 4px; background: #1db954; animation: equalize 1s infinite; }
-        .bar:nth-child(2) { animation-delay: 0.2s; }
-        .bar:nth-child(3) { animation-delay: 0.4s; }
-
-        /* Things I Love */
-        .love-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
-        .love-card { background: #ffecf1; padding: 20px; border-radius: 15px; text-align: center; color: #d6336c; font-weight: 500; }
-
-        /* --- THE SECRET NOTE (UPDATED) --- */
-        .envelope-container { height: 250px; display: flex; justify-content: center; align-items: center; margin-top: 20px; }
-        .envelope-wrapper { position: relative; width: 300px; height: 200px; cursor: pointer; }
-        .envelope { position: relative; width: 100%; height: 100%; }
-        .envelope::before { /* Envelope Inside */
-            content: ''; position: absolute; bottom: 0; width: 100%; height: 100%;
-            background: #ff8fa3; border-radius: 0 0 10px 10px; z-index: 1;
-        }
-        .flap {
-            position: absolute; top: 0; width: 100%; height: 0;
-            border-left: 150px solid transparent; border-right: 150px solid transparent;
-            border-top: 110px solid #ff4d6d; transform-origin: top;
-            transition: transform 0.6s ease; z-index: 5;
-        }
-        .pocket {
-            position: absolute; bottom: 0; width: 100%; height: 0;
-            border-left: 150px solid transparent; border-right: 150px solid transparent;
-            border-bottom: 110px solid #ff5c7c; z-index: 4; border-radius: 0 0 10px 10px;
-        }
+        .song-item:hover { transform: scale(1.02); }
+        .album-art { width: 60px; height: 60px; border-radius: 10px; object-fit: cover; flex-shrink: 0; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
+        .song-info h4 { margin: 0; font-size: 0.95rem; font-weight: 600; }
+        .song-info p { margin: 2px 0 0 0; font-size: 0.75rem; color: #777; }
         
-        .letter {
-            position: absolute; bottom: 10px; left: 5%; width: 90%; height: 90%;
-            background: white; border-radius: 5px; z-index: 2;
-            padding: 20px; box-sizing: border-box; text-align: center;
-            transition: transform 0.8s ease 0.2s; /* Slides up */
-            box-shadow: 0 -5px 15px rgba(0,0,0,0.1);
-            display: flex; align-items: center; justify-content: center;
+        /* Music Bars Animation */
+        .music-bars { display: flex; gap: 3px; margin-left: auto; height: 20px; align-items: flex-end; }
+        .bar { width: 4px; background: var(--primary); animation: equalize 1s infinite; border-radius: 2px; }
+        .bar:nth-child(1) { animation-delay: 0.1s; height: 10px; }
+        .bar:nth-child(2) { animation-delay: 0.3s; height: 15px; }
+        .bar:nth-child(3) { animation-delay: 0.5s; height: 8px; }
+
+        /* --- SURPRISE BOX --- */
+        .gift-box { height: auto; padding: 20px 0; display: flex; justify-content: center; align-items: center; cursor: pointer; flex-direction: column; }
+        .gift-emoji { font-size: 5rem; animation: wobble 2s infinite; }
+        .gift-content { display: none; text-align: center; width: 100%; animation: popIn 0.5s; }
+        .gift-content img { width: 80%; max-width: 200px; border-radius: 15px; box-shadow: 0 5px 15px rgba(0,0,0,0.1); }
+
+        /* --- PHOTO GALLERY --- */
+        .photo-gallery {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
         }
-        
-        /* --- THIS IS THE MAGIC TEXT FADE EFFECT --- */
-        .handwritten {
+        .gallery-item {
+            position: relative;
+            overflow: hidden;
+            border-radius: 15px;
+            box-shadow: 0 5px 10px rgba(0,0,0,0.05);
+            background: white;
+            padding: 5px;
+            transition: transform 0.3s;
+        }
+        .gallery-item:hover { transform: scale(1.03); }
+        .gallery-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 10px;
+            display: block;
+        }
+
+        /* --- LETTER --- */
+        .flip-card { 
+            background-color: transparent; 
+            width: 100%; 
+            height: 260px; 
+            perspective: 1000px; 
+            cursor: pointer; 
+        }
+        .flip-card-inner { position: relative; width: 100%; height: 100%; text-align: center; transition: transform 0.6s; transform-style: preserve-3d; }
+        .flip-card.flipped .flip-card-inner { transform: rotateY(180deg); }
+        .flip-front, .flip-back { 
+            position: absolute; width: 100%; height: 100%; 
+            -webkit-backface-visibility: hidden; backface-visibility: hidden; 
+            border-radius: 20px; 
+            display: flex; align-items: center; justify-content: center; flex-direction: column; 
+        }
+        .flip-front { background: linear-gradient(135deg, #ff3366, #ff8fa3); color: white; }
+        .flip-back { 
+            background: white; color: #333; transform: rotateY(180deg); 
+            border: 2px solid #ffccd5; padding: 20px; box-sizing: border-box; 
+        }
+        .handwritten { 
             font-family: 'Dancing Script', cursive; 
-            font-size: 1.6rem; 
+            font-size: 1.4rem; 
             color: #444; 
             line-height: 1.4;
-            opacity: 0; /* INVISIBLE INITIALLY */
-            transform: scale(0.95);
-            /* The delay (0.8s) waits for the letter to slide up before showing text */
-            transition: all 1s ease 0.8s; 
-        }
-        
-        /* When Open */
-        .envelope-wrapper.open .flap { transform: rotateX(180deg); z-index: 1; }
-        .envelope-wrapper.open .letter { transform: translateY(-120px); z-index: 6; }
-        
-        /* Reveal Text When Open */
-        .envelope-wrapper.open .handwritten {
-            opacity: 1;
-            transform: scale(1);
         }
 
-        /* Memories */
-        .photo-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; }
-        .photo-card { aspect-ratio: 1; background: #fff; border-radius: 15px; overflow: hidden; position: relative; cursor: pointer; }
-        .photo-cover { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: #ffccd5; display: flex; align-items: center; justify-content: center; font-size: 2rem; transition: opacity 0.5s; z-index: 2; }
-        .photo-card img { width: 100%; height: 100%; object-fit: cover; }
-        .photo-card.revealed .photo-cover { opacity: 0; pointer-events: none; }
+        /* Canvas for Confetti */
+        #confetti-canvas {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 999;
+        }
 
-        @keyframes bounceIn { 0% { transform: scale(0.8); opacity: 0; } 100% { transform: scale(1); opacity: 1; } }
-        @keyframes fadeInUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes heartbeat { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.15); } }
+        @keyframes wobble { 0%, 100% { transform: rotate(0deg); } 25% { transform: rotate(-10deg); } 75% { transform: rotate(10deg); } }
+        @keyframes fadeIn { to { opacity: 1; } }
+        @keyframes popIn { 0% { transform: scale(0); opacity: 0; } 100% { transform: scale(1); opacity: 1; } }
         @keyframes equalize { 0% { height: 5px; } 50% { height: 15px; } 100% { height: 5px; } }
+
     </style>
 </head>
 <body>
 
-    <div class="bg-hearts">
-        <div class="heart-bg" style="left: 10%; animation-duration: 15s;">❤️</div>
-        <div class="heart-bg" style="left: 30%; animation-duration: 10s;">💖</div>
-        <div class="heart-bg" style="left: 60%; animation-duration: 12s;">💞</div>
-        <div class="heart-bg" style="left: 80%; animation-duration: 18s;">💘</div>
-    </div>
+    <canvas id="confetti-canvas"></canvas>
 
     <div class="hero" id="hero">
         <div class="hero-card">
-            <img src="https://media.tenor.com/K2sE9tF3oK8AAAAi/milk-and-mocha-cute.gif" alt="Cute Bear">
-            <h1>Will you be my Valentine? 🌹</h1>
-            <p>Official invite from your admirer</p>
+            <div class="big-heart">💖</div>
+            <h1>Will you be my Valentine?</h1>
+            <span class="name-highlight">Jyoti</span>
             <div class="btn-group">
-                <button class="btn btn-yes" onclick="showContent()">YES! 🥰</button>
+                <button class="btn btn-yes" onclick="start()">YES! 🥰</button>
                 <button class="btn btn-no" id="noBtn" onmouseover="moveNo()" ontouchstart="moveNo()">No 💔</button>
             </div>
         </div>
@@ -178,85 +254,107 @@
 
     <div class="container" id="content">
         
-        <div style="text-align: center; margin: 30px 0;">
-            <img src="https://media.tenor.com/gUiu1zyxfzYAAAAi/bear-kiss-bear-kisses.gif" style="width: 150px; border-radius: 15px;">
-            <h2 style="margin-top: 15px;">Good choice Babu! 😘</h2>
-            <p style="color: #666;">You're officially stuck with me now.</p>
+        <div class="header-msg">
+            <h2>Yay! Good choice! 😘</h2>
+            <p>I made this just for you, Jyoti.</p>
         </div>
 
-        <div class="section-box" style="animation-delay: 0.2s;">
-            <h2>Our Virtual Date Ideas 📅</h2>
-            <div class="date-item"><div class="date-icon">🍿</div><div><strong>Netflix Party</strong><br><small>We watch, we judge.</small></div></div>
-            <div class="date-item"><div class="date-icon">🍜</div><div><strong>Dinner Date</strong><br><small>Order same food & video call.</small></div></div>
-            <div class="date-item"><div class="date-icon">🎮</div><div><strong>Game Night</strong><br><small>I'll let you win (maybe).</small></div></div>
-            <div class="date-item"><div class="date-icon">😴</div><div><strong>Sleep Call</strong><br><small>Napping together on cam.</small></div></div>
-        </div>
-
-        <div class="section-box" style="animation-delay: 0.4s;">
-            <h2>Our Soundtrack 🎵</h2>
-            <div class="song-item">
-                <div class="album-art" style="background-image: url('https://i.scdn.co/image/ab67616d0000b273ba5db46f4b838ef6027e6f96');"></div>
-                <div class="song-info"><h4>Perfect</h4><p>Ed Sheeran</p></div>
-                <div class="music-bars"><div class="bar"></div><div class="bar"></div><div class="bar"></div></div>
+        <div class="section-box reveal">
+            <h3>✨ Our Memories</h3>
+            <div class="memory-lane">
+                <div class="wire"></div>
+                <div class="photo-frame"><img src="https://placekitten.com/300/300" alt="Memory"></div>
+                <div class="photo-frame"><img src="https://placekitten.com/301/301" alt="Memory"></div>
+                <div class="photo-frame"><img src="https://placekitten.com/302/302" alt="Memory"></div>
+                <div class="photo-frame"><img src="https://placekitten.com/303/303" alt="Memory"></div>
             </div>
-            <div class="song-item">
-                <div class="album-art" style="background-image: url('https://i.scdn.co/image/ab67616d0000b273e787cffec20aa2a396a61647');"></div>
-                <div class="song-info"><h4>Lover</h4><p>Taylor Swift</p></div>
-                <div class="music-bars"><div class="bar"></div><div class="bar"></div><div class="bar"></div></div>
-            </div>
+            <p style="text-align: center; font-size: 0.8rem; color: #888;">(Hanging by the thread of love 🧵)</p>
         </div>
 
-        <div class="section-box" style="animation-delay: 0.6s;">
-            <h2>Things I Love About You ✨</h2>
-            <div class="love-grid">
-                <div class="love-card">Your pretty smile 😊</div>
-                <div class="love-card">Your chaotic energy 🤪</div>
-                <div class="love-card">How you tolerate me 🥺</div>
-                <div class="love-card">Your voice ❤️</div>
-                <div class="love-card">Your hugs (virtual for now) 🫂</div>
-                <div class="love-card">Everything! 💯</div>
-            </div>
-        </div>
-
-        <div class="section-box" style="animation-delay: 0.8s;">
-            <h2>Our Favorite Memories 📸</h2>
-            <div class="photo-grid">
-                <div class="photo-card" onclick="this.classList.add('revealed')"><div class="photo-cover">🎁</div><img src="https://placekitten.com/400/400" alt="Memory"></div>
-                <div class="photo-card" onclick="this.classList.add('revealed')"><div class="photo-cover">🎁</div><img src="https://placekitten.com/401/401" alt="Memory"></div>
-                <div class="photo-card" onclick="this.classList.add('revealed')"><div class="photo-cover">🎁</div><img src="https://placekitten.com/402/402" alt="Memory"></div>
-                <div class="photo-card" onclick="this.classList.add('revealed')"><div class="photo-cover">🎁</div><img src="https://placekitten.com/403/403" alt="Memory"></div>
-            </div>
-        </div>
-
-        <div class="section-box" style="animation-delay: 1s;">
-            <h2>A Secret Note For You 💌</h2>
-            <p style="text-align: center; font-size: 0.9rem;">Tap the envelope to reveal the secret...</p>
+        <div class="section-box reveal">
+            <h3>🎶 Songs For You</h3>
             
-            <div class="envelope-container">
-                <div class="envelope-wrapper" onclick="toggleEnvelope(this)">
-                    <div class="envelope">
-                        <div class="flap"></div>
-                        <div class="pocket"></div>
-                        <div class="letter">
-                            <div class="handwritten">
-                                "My Dearest,<br>
-                                Every day with you is my favorite day. I can't wait to close the distance. Happy Valentine's Day! <br>
-                                - Love, Me"
-                            </div>
+            <div class="song-item">
+                <img src="https://i.scdn.co/image/ab67616d0000b273c08202c50371e234d20caf62" class="album-art" alt="Kesariya">
+                <div class="song-info"><h4>Kesariya</h4><p>Your favorite vibe ✨</p></div>
+                <div class="music-bars"><div class="bar"></div><div class="bar"></div><div class="bar"></div></div>
+            </div>
+            
+            <div class="song-item">
+                <img src="https://c.saavncdn.com/238/Shershaah-Original-Motion-Picture-Soundtrack--Hindi-2021-20210815181610-500x500.jpg" class="album-art" alt="Raataan Lambiyan">
+                <div class="song-info"><h4>Raataan Lambiyan</h4><p>Thinking of you 🌙</p></div>
+                <div class="music-bars"><div class="bar"></div><div class="bar"></div><div class="bar"></div></div>
+            </div>
+
+            <div class="song-item">
+                <img src="https://i.postimg.cc/T37XWQRq/800x800cc.jpg" class="album-art" alt="Apna Bana Le">
+                <div class="song-info"><h4>Apna Bana Le</h4><p>My home 🏠</p></div>
+                <div class="music-bars"><div class="bar"></div><div class="bar"></div><div class="bar"></div></div>
+            </div>
+
+            <div class="song-item">
+                <img src="https://i.postimg.cc/HxKGPLJb/tum-hi-ho-as-exclusive-remix-d-w800-q70-1679921446408.jpg" class="album-art" alt="Tum Hi Ho">
+                <div class="song-info"><h4>Tum Hi Ho</h4><p>Forever ❤️</p></div>
+                <div class="music-bars"><div class="bar"></div><div class="bar"></div><div class="bar"></div></div>
+            </div>
+        </div>
+
+        <div class="section-box reveal">
+            <h3>🎁 Surprise for Jyoti</h3>
+            <div class="gift-box" onclick="openGift()">
+                <div class="gift-emoji" id="giftEmoji">🎁</div>
+                <div class="gift-content" id="giftContent">
+                    <img src="https://media.tenor.com/gUiu1zyxfzYAAAAi/bear-kiss-bear-kisses.gif" alt="Hug GIF">
+                    <p style="color: #ff3366; font-weight: bold; margin-top: 15px;">Virtual Hugs Sent! 🫂</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="section-box reveal">
+            <h3>📸 Photo Gallery</h3>
+            <div class="photo-gallery">
+                <div class="gallery-item"><img src="https://picsum.photos/200/300?random=1" alt="Photo 1"></div>
+                <div class="gallery-item"><img src="https://picsum.photos/200/300?random=2" alt="Photo 2"></div>
+                <div class="gallery-item"><img src="https://picsum.photos/200/300?random=3" alt="Photo 3"></div>
+                <div class="gallery-item"><img src="https://picsum.photos/200/300?random=4" alt="Photo 4"></div>
+            </div>
+        </div>
+
+        <div class="section-box reveal">
+            <h3>💌 My Heart</h3>
+            <div class="flip-card" onclick="this.classList.toggle('flipped')">
+                <div class="flip-card-inner">
+                    <div class="flip-front">
+                        <span style="font-size: 3rem;">📩</span>
+                        <p style="margin-top: 10px; font-weight: 600;">Tap to Open</p>
+                    </div>
+                    <div class="flip-back">
+                        <div class="handwritten">
+                            "Dearest Jyoti,<br>
+                            You make my world brighter.<br>
+                            Your smile is my favorite thing.<br>
+                            I love you so much!<br>
+                            Happy Valentine's Day! ❤️"
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-        
-        <p style="text-align: center; color: #aaa; font-size: 0.8rem; margin-top: 30px;">Made with ❤️ for you</p>
+
+        <p style="text-align: center; color: #ff8fa3; font-size: 0.8rem; margin-top: 30px;">Made with ❤️ for you</p>
     </div>
 
     <script>
-        function showContent() {
+        function start() {
             document.getElementById('hero').style.display = 'none';
             document.getElementById('content').style.display = 'block';
-            window.scrollTo({ top: 0, behavior: 'smooth' });
+            window.scrollTo(0,0);
+            
+            // Trigger Confetti
+            launchConfetti();
+            
+            // Setup Scroll Animation
+            setupScrollAnimation();
         }
 
         function moveNo() {
@@ -268,8 +366,63 @@
             btn.style.top = y + 'px';
         }
 
-        function toggleEnvelope(element) {
-            element.classList.toggle('open');
+        function openGift() {
+            document.getElementById('giftEmoji').style.display = 'none';
+            document.getElementById('giftContent').style.display = 'block';
+            launchConfetti(); // Confetti again on gift open!
+        }
+
+        function setupScrollAnimation() {
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('active');
+                    }
+                });
+            }, { threshold: 0.1 });
+
+            document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+        }
+
+        // Simple Confetti Implementation
+        function launchConfetti() {
+            const canvas = document.getElementById('confetti-canvas');
+            const ctx = canvas.getContext('2d');
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+            
+            const pieces = [];
+            const colors = ['#ff3366', '#ff8fa3', '#ffe6ea', '#ffd700', '#ffffff'];
+
+            for (let i = 0; i < 150; i++) {
+                pieces.push({
+                    x: Math.random() * canvas.width,
+                    y: Math.random() * canvas.height - canvas.height,
+                    color: colors[Math.floor(Math.random() * colors.length)],
+                    size: Math.random() * 8 + 4,
+                    speed: Math.random() * 5 + 2,
+                    angle: Math.random() * 2 * Math.PI
+                });
+            }
+
+            function draw() {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                let active = false;
+                pieces.forEach(p => {
+                    p.y += p.speed;
+                    p.x += Math.sin(p.angle) * 2;
+                    if (p.y < canvas.height) {
+                        active = true;
+                        ctx.fillStyle = p.color;
+                        ctx.beginPath();
+                        ctx.arc(p.x, p.y, p.size, 0, 2 * Math.PI);
+                        ctx.fill();
+                    }
+                });
+                if (active) requestAnimationFrame(draw);
+                else ctx.clearRect(0,0, canvas.width, canvas.height);
+            }
+            draw();
         }
     </script>
 </body>
